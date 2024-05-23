@@ -1,6 +1,10 @@
 # vagrant-box-bionic64-kind
 A Vagrantbox ready  for running local Kubernetes clusters with [Kind](https://kind.sigs.k8s.io/) .
 
+This fork is configuring this image as a basebox, which can be extended.
+See usage example: [](https://github.com/ricardojlrufino/vagrant-multicluster-kind)
+Basebox: [](https://app.vagrantup.com/ricardojlrufino/boxes/vagrant-box-bionic64-kind)
+
 ## Description
 This repository contains everything needed to build the bionic64-kind vagrant box.This box is based on the hashicorp/bionic64, a standard Ubuntu 18.04 LTS 64-bit provided by Hashicorp.
 
@@ -45,6 +49,15 @@ KubeDNS is running at https://127.0.0.1:46157/api/v1/namespaces/kube-system/serv
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
+
+
+6. Export box (optional)
+
+```
+vagrant package --output vagrant-box-bionic64-kind.box
+vagrant box add --force vagrant-box-bionic64-kind vagrant-box-bionic64-kind.box
+```
+
 
 Ready to shine! You are ready to deploy applications on kubernetes.
 

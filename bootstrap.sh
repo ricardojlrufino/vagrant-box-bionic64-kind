@@ -1,26 +1,28 @@
 #!/bin/bash
+export DEBIAN_FRONTEND=noninteractive
 
 # Install docker
-sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+echo "**** installing docker"
+sudo apt-get install -y ca-certificates software-properties-common curl wget dnsutils nano
+##  apt-transport-https gnupg-agent
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io 
 usermod -aG docker vagrant
-sudo docker run hello-world
+#sudo docker run hello-world
 echo "**** End installing Docker CE"
 
-# Install kubectl
-sudo apt-get update && sudo apt-get install -y apt-transport-https
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
-sudo apt-get install -y kubectl 
-kubectl cluster-info
+echo "**** Installing kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+mv ./kubectl /usr/local/bin/kubectl
+kubectl version
 echo "**** End installing kubectl"
 
-# Install kind
-curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+echo "**** Installing kind"
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.22.0/kind-linux-amd64
 chmod +x ./kind
 mv ./kind /usr/local/bin/kind
+kind version
 echo "**** End installing kind"

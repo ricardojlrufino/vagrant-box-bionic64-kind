@@ -1,6 +1,8 @@
 #!/bin/sh
 set -o errexit
 
+VM_IP=$1
+
 # create registry container unless it already exists
 reg_name='kind-registry'
 reg_port='5000'
@@ -12,9 +14,12 @@ if [ "${running}" != 'true' ]; then
 fi
 
 # create a cluster with the local registry enabled in containerd
-cat <<EOF | kind create cluster --config=-
+cat <<EOF | kind create cluster --name "$HOSTNAME" --config=-
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+    apiServerAddress: ${VM_IP}
+    apiServerPort: 5555
 containerdConfigPatches:
 - |-
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${reg_port}"]
@@ -47,8 +52,10 @@ done
 
 # Initialize kind
 kind get clusters
-mkdir .kube
-kind get kubeconfig > .kube/config
+mkdir -p ~/.kube
+kind get kubeconfig --name $(hostname) > ~/.kube/config
+
+
 # Create nginx-ingress controller 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
 echo "**** Cluster started :) Ready to shine!"
