@@ -2,8 +2,8 @@
 A Vagrantbox ready  for running local Kubernetes clusters with [Kind](https://kind.sigs.k8s.io/) .
 
 This fork is configuring this image as a basebox, which can be extended.
-See usage example: [](https://github.com/ricardojlrufino/vagrant-multicluster-kind)
-Basebox: [](https://app.vagrantup.com/ricardojlrufino/boxes/vagrant-box-bionic64-kind)
+See usage example: (https://github.com/ricardojlrufino/vagrant-multicluster-kind)
+Basebox: (https://app.vagrantup.com/ricardojlrufino/boxes/vagrant-box-bionic64-kind)
 
 ## Description
 This repository contains everything needed to build the bionic64-kind vagrant box.This box is based on the hashicorp/bionic64, a standard Ubuntu 18.04 LTS 64-bit provided by Hashicorp.
